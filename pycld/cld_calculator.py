@@ -1,12 +1,33 @@
 def get_next_unused_letter(columns):
+    """
+    Identify the next unused lowercase letter to use for compact lettering.
+  
+    Parameters:
+    columns (list of strs): List of current column groups.
+
+    Returns:
+    str or None: Returns the next available lowercase letter, or None if all 26 letters are already used.
+    """
     used_letters = set(letter for col in columns for letter in col if letter != '')
+    
+    # Iterate through the alphabet to find an unused letter.
     for letter in 'abcdefghijklmnopqrstuvwxyz':
         if letter not in used_letters:
             return letter
-    return None  # all letters are used (with >26 columns)
-
+    
+    # Return None if all letters are used (which should only happen with >26 columns).
+    return None  
 
 def absorb_columns(columns):
+    """
+    Absorbs redundant columns by comparing indices.
+
+    Parameters:
+    columns (list of strs): List of current column groups.
+
+    Returns:
+    list of strs: The processed list of column groups.
+    """
     absorbed = True
     while absorbed:
         absorbed = False
@@ -20,54 +41,48 @@ def absorb_columns(columns):
                         columns.pop(i)
                         break
             if absorbed:
-                break       
+                break
     return columns
 
+def compact_letter_display(significant_pairs, columns):
+    """
+    Generate compact letter display (CLD) for columns based on significant pairs.
+    
+    Parameters:
+    significant_pairs (list of tuples): Significant pairs identified in a Tukey HSD test.
+    columns (list of str): Columns in the DataFrame.
+
+    Returns:
+    list of str: The compact letter display representation.
+    """
+    num_groups = len(columns)
+
+    # Map column names to indices.
+    col_to_index = {col: idx for idx, col in enumerate(columns)}
+
+    # Map significant pair names to indices.
+    significant_pairs = [(col_to_index[col1], col_to_index[col2]) for col1, col2 in significant_pairs]
 
 
-def compact_letter_display(significant_pairs, num_groups):
     columns = [['a'] * num_groups]
     for pair_idx, (i, j) in enumerate(significant_pairs):
-        #print(f"\nProcessing significant pair: ({i}, {j})")
         connected = False
         for idx, column in enumerate(columns):
-            #print(f"checking column {column}")
+            # When current pair have the same letter...
             if column[i] == column[j] and column[i] != '':
                 connected = True
                 new_letter = get_next_unused_letter(columns)
-                #print(f"New letter: {new_letter}")
                 new_column = column.copy() 
                 new_column = [new_letter if column[i] != '' else '' for i in range(num_groups)]
-                #print(f'New column: {new_column}')
                 new_column[i] = ''
                 column[j] = ''
                 columns[idx] = column
-                #print(f"columns after removing letters: {column} and {new_column}")
                 columns.append(new_column)
-                #print(f"columns after appending new column: {columns}")
                 columns = absorb_columns(columns)
             if connected:
                 break 
 
-        #print(f"Current columns: {columns}")
-
+    # Generate compact letter displays from the columns list.
     result = [''.join(columns[k][n] for k in range(len(columns)) if columns[k][n] != '') for n in range(num_groups)]
-    print(f"Final result: {result}")
+ 
     return result
-
-num_groups = 3
-pairs_list = [
-    [(0, 1)],
-    [(0, 2)],
-    [(1, 2)],
-    [(0, 1), (0, 2)],
-    [(0, 1), (1, 2)],
-    [(0, 2), (1, 2)],
-    [(0, 1), (0, 2), (1, 2)]
-]
-
-for significant_pairs in pairs_list:
-    print(f"\nTesting pairs: {significant_pairs}")
-    cld_result = compact_letter_display(significant_pairs, num_groups)
-
-
