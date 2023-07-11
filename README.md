@@ -1,7 +1,7 @@
 # Compact Letter Display in Python
 
 ## Description
-This is a collection of scripts that perform analysis of variance (ANOVA), Tukey HSD pairwise comparison, and generates compact letter displays (CLD). You can use these to perform statistical testing using ANOVA, find significant pairs with Tukey HSD pairwise comparison, and generate a compact letter display, representing a summary of the results.
+This is a collection of scripts that perform analysis of variance (ANOVA), posthoc comparison tests (Tukey HSD and Fisher's LSD), and generate a compact letter display, representing a summary of the results.
 
 ## Compact Letter Display Algorithm
 `cld_calculator.py` uses the insert-absorb algorithm from "Hans-Peter Piepho (2004), An Algorithm for a Letter-Based Representation of All-Pairwise Comparisons, Journal of Computational and Graphical Statistics, 13(2), 456--466."
