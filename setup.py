@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='compactletterdisplay',
-    version='0.1',
+    version='0.11',
     packages=find_packages(),
     url='https://github.com/sujeet-bhalerao/compact-letter-display',
     author='Sujeet Bhalerao',
