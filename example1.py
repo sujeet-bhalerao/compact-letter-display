@@ -1,5 +1,5 @@
 import pandas as pd
-import pycld
+import compactletterdisplay
 
 df = pd.DataFrame({
     'control': [1.2, 3.6, 4.2, 2.9, 3.5],
@@ -11,6 +11,6 @@ df = pd.DataFrame({
 columns = ['control', 'treatment1', 'treatment2', 'treatment3']
 
 alpha = 0.1
-result_df = pycld.anova_cld(df, columns, alpha=alpha)
+result_df = compactletterdisplay.anova_cld(df, columns, alpha=alpha)
 
 print(result_df)

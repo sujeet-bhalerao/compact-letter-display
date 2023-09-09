@@ -35,7 +35,7 @@ An example of creating a compact letter display from a pandas DataFrame:
 
 ```python
 import pandas as pd
-import pycld
+import compactletterdisplay
 
 # Create your DataFrame:
 df = pd.DataFrame({
@@ -50,7 +50,7 @@ columns = ['control', 'treatment1', 'treatment2', 'treatment3']
 
 # Perform ANOVA, pairwise comparison, get compact letter displays
 alpha = 0.1
-result_df = pycld.anova_cld(df, columns, alpha)
+result_df = compactletterdisplay.anova_cld(df, columns, alpha)
 
 print(result_df)
 ```
@@ -58,7 +58,7 @@ print(result_df)
 An example using a CSV file:
 
 ```python
-from pycld.pairwise_comp import anova_cld
+from compactletterdisplay.pairwise_comp import anova_cld
 
 filepath = "example.csv"  # update with your csv or xlsx file path
 alpha = 0.05

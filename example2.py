@@ -1,4 +1,4 @@
-from pycld.pairwise_comp import anova_cld
+from compactletterdisplay.pairwise_comp import anova_cld
 
 filepath = "example.csv"  # update with your csv or xlsx file path
 alpha = 0.05
