@@ -82,6 +82,13 @@ def compact_letter_display(significant_pairs, columns):
             if connected:
                 break 
 
+    # Adjust letters so that the first group has 'a', the second has 'b', etc.
+    sorter = lambda col: next((i for i, value in enumerate(col) if value != ''), len(col))
+    columns = sorted(columns, key=sorter)
+    for ind, c in enumerate(columns):
+        new_letters = [chr(ord('a') + ind) if _ != '' else '' for _ in c]
+        columns[ind] = new_letters
+
     # Generate compact letter displays from the columns list.
     result = [''.join(columns[k][n] for k in range(len(columns)) if columns[k][n] != '') for n in range(num_groups)]
  
